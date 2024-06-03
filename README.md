@@ -9,7 +9,7 @@ This repository showcases an automated cryptocurrency forecasting pipeline devel
 
 ## Skills Demonstrated - Building Blocks of the Machine Learning Pipeline
 
-- **Data Pipelines:**
+- **Data Fetching Pipeline:**
   - **Data Extraction:** Utilizes a Cloud Function to extract raw cryptocurrency data from CoinAPI and store it in BigQuery and Cloud Storage.
 
 - **Machine Learning Pipeline:**
