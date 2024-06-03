@@ -57,15 +57,22 @@ This repository showcases an automated cryptocurrency forecasting pipeline devel
     git clone https://github.com/yourusername/crypto-forecasting-pipeline.git
     ```
 
-2. **Install dependencies**
+2. **Set up Google Cloud Platform services**
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+    - Create a new project in Google Cloud Platform
+    - Enable the required APIs: Cloud Functions, Cloud Storage, BigQuery, Cloud Scheduler, Workflows
+    - Create service accounts with the following permissions:
+        - Read/Write to BigQuery
+        - Read/Write to Cloud Storage
+        - Workflows invoker
+    - Generate keys (.JSON files) for those service accounts and download them locally.
 
 3. **Test the Cloud Functions locally**
 
     - Navigate to each pipeline directory (`data-fetching-pipeline`, `feature-pipeline`, `training-pipeline`, `inference-pipeline`).
+    - Create a virtual environment: `python3 -m venv venv` and activate it: `source venv/bin/activate`
+    - Install dependencies: `pip install -r requirements.txt`
+    - Create a `.env` file and fill in environment variables based on the corresponding `settings.py` file of the same directory
     - Run the respective `main.py` scripts locally to validate functionality.
 
 4. **Deploy on Google Cloud**
@@ -75,11 +82,11 @@ This repository showcases an automated cryptocurrency forecasting pipeline devel
 
 ### Detailed Instructions
 
-Detailed deployment instructions are provided by DataProjects.io in the project material, including how to:
+Detailed project implementation and deployment instructions are provided by DataProjects.io in the project material, including how to:
 
-- Build and deploy Docker images for the Cloud Functions.
-- Deploy the containerized functions on Cloud Run (if needed).
-- Configure and use Cloud Scheduler to trigger the workflows.
+- Set up Google Cloud Platform project and services.
+- Build the data and machine learning pipelines
+- Deploy and monitor the automated execution of the end-to-end project
 
 ## Running the Project
 
