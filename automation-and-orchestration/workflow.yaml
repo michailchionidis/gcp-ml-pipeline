@@ -1,0 +1,80 @@
+main:
+  params: [request]
+  steps:
+    - init:
+        assign:
+          - urls:
+              data_fetcing: "DATA_FETCHING_PIPELINE_TRIGGER_URL"
+              feature_pipeline:  "FEATURE_PIPELINE_TRIGGER_URL"
+              training_pipeline: "TRAINING_PIPELINE_TRIGGER_URL"
+              inference_pipeline:  "INFERENCE_PIPELINE_TRIGGER_URL"
+          - current_time: ${time.now()}
+          - projectId: "YOUR_GCP_PROJECT_ID"
+          - predictionsDataDatasetId: "cryptocurrency_predictions"
+          - tableId: ${request.crypto_code}
+
+    - extract_hour:
+        assign:
+          - current_hour_str: ${text.substring(time.format(current_time), 11, 13)}
+          - current_hour: ${int(current_hour_str)}
+
+    - data_fetching:
+        call: http.post
+        args:
+          url: ${urls.data_fetcing}
+          body:
+            crypto_code: ${request.crypto_code}
+            symbol: ${request.symbol}
+        result: data_fetcing_result
+
+    - feature_engineering:
+        call: http.post
+        args:
+          url: ${urls.feature_pipeline}
+          body:
+            bq_table: ${request.crypto_code}
+        result: feature_result
+
+    - check_time:
+        switch:
+          - condition: ${current_hour == 0}
+            next: training
+        next: check_table_existence
+
+    - check_table_existence:
+        try:
+          steps:
+            - check_table:
+                call: http.get
+                args:
+                  url: ${"https://bigquery.googleapis.com/bigquery/v2/projects/" + projectId + "/datasets/" + predictionsDataDatasetId + "/tables/" + tableId}
+                  auth:
+                    type: OAuth2
+                    scopes: 
+                      - https://www.googleapis.com/auth/bigquery.readonly
+                result: table_response
+        except:
+          steps:
+            - handle_error:
+                next: training
+        next: inference
+
+    - training:
+        call: http.post
+        args:
+          url: ${urls.training_pipeline}
+          body:
+            bq_table: ${request.crypto_code}
+        result: training_result
+        next: inference
+
+    - inference:
+        call: http.post
+        args:
+          url: ${urls.inference_pipeline}
+          body:
+            bq_table: ${request.crypto_code}
+        result: inference_result
+
+    - return_result:
+        return: ${inference_result}
