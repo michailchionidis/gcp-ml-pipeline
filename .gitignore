@@ -1,0 +1,9 @@
+.git
+.gcloudignore
+*/venv/
+*.pkl
+*.png
+.DS_Store
+*/.env
+*/*.json
+.env
