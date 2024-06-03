@@ -100,7 +100,7 @@ Contributions to this project are welcome! Please fork this repository and submi
 
 ## Acknowledgments
 
-This project is provided by DataProjects.io, a platform that helps data professionals build a portfolio of real-world, end-to-end projects on the cloud.
+This project is provided by [DataProjects.io](https://dataprojects.io), a platform that helps data professionals build a portfolio of real-world, end-to-end projects on the cloud.
 
 ## License
 
