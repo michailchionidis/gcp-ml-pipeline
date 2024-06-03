@@ -5,7 +5,8 @@ This repository showcases an automated cryptocurrency forecasting pipeline devel
 
 ## Project Architecture
 
-![Project Architecture](https://github.com/michailchionidis/gcp-ml-pipeline/assets/104796421/8d9d941e-f0ca-4c32-95c1-088ce9fd5205)
+![Project Architecture](https://github.com/michailchionidis/gcp-ml-pipeline/assets/104796421/4b5684a5-84db-480e-8d02-20ac3ab220dc)
+
 
 ## Skills Demonstrated - Building Blocks of the Machine Learning Pipeline
 
